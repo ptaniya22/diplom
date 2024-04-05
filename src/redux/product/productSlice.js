@@ -24,7 +24,7 @@ export const productSlice = createSlice({
   reducers: {
     sortProducts: (state, action) => {
       state.product.sort((a, b) => {
-        if (action.payload === 'price') {
+        if ((action.payload === 'price') | (action.payload === 'stock')) {
           if (a[action.payload] > b[action.payload]) {
             return -1;
           } else {

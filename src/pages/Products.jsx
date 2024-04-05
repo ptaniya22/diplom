@@ -16,13 +16,17 @@ const Products = () => {
   const { isError, product } = useSelector(usersSelector);
   const [items, setItems] = useState([]);
   const dispatch = useDispatch();
+  const [search, setSearch] = useState('');
 
-  // useEffect(() => {
-  //   dispatch(getProduct(currentPage));
-  //   setItems(product);
-  // }, []);
-
+  useEffect(() => {
+    dispatch(getProduct(-9));
+    setItems(product);
+  }, []);
   console.log('items is', items);
+
+  let sorteProducts = product?.filter(product =>
+    product.title.toLowerCase().includes(search.toLowerCase())
+  );
 
   if (isError) {
     return <h1>Ошибка в запросе</h1>;
@@ -30,40 +34,59 @@ const Products = () => {
 
   return (
     <div className="container">
+      <input
+        className="main__input"
+        type="text"
+        placeholder="Поиск"
+        value={search}
+        onChange={event => setSearch(event.target.value)}
+      />
       {/* <div className="box"></div> */}
       <div className="main">
-        {product?.map(item => (
+        {sorteProducts?.map(item => (
           <div key={item.id} className="main_item">
             <img src={item.thumbnail} alt="" />
             {/* {console.log(item.title)} */}
-            <p>{item.title}</p>
+            <h3>{item.title}</h3>
             <p>{item.description}</p>
-            <p>Prise:{item.price}</p>
-            <p>Discount Pice:{item.discountPercentage}</p>
-            <p>Stock{item.stock}</p>
-            <Link to={`/product/${item.id}`}>More: {item.title}</Link>
+            <p>
+              {' '}
+              <span>Price :</span>
+              {item.price}
+            </p>
+            <p>
+              {' '}
+              <span>Discount Price:</span> {item.discountPercentage}
+            </p>
+            <p>
+              {' '}
+              <span>Stock :</span> {item.stock}
+            </p>
+            <Link to={`/product/${item.id}`}>
+              <span className="item_link">More... </span>
+            </Link>
           </div>
         ))}
-        <ReactPaginate
-          previousLabel={'previous'}
-          nextLabel={'next'}
-          breakLabel={'...'}
-          pageCount={15}
-          marginPagesDisplayed={3}
-          pageRangeDisplayed={3}
-          onPageChange={handlePageClick}
-          containerClassName={'pagination justify-content-center'}
-          pageClassName={'page-item'}
-          pageLinkClassName={'page-link'}
-          previousClassName={'page-item'}
-          previousLinkClassName={'page-link'}
-          nextClassName={'page-item'}
-          nextLinkClassName={'page-link'}
-          breakClassName={'page-item'}
-          breakLinkClassName={'page-link'}
-          activeClassName={'active'}
-        />
       </div>
+      <ReactPaginate
+        previousLabel={'previous'}
+        nextLabel={'next'}
+        breakLabel={'...'}
+        pageCount={15}
+        marginPagesDisplayed={3}
+        pageRangeDisplayed={3}
+        onPageChange={handlePageClick}
+        containerClassName={'pagination justify-content-center '}
+        pageClassName={'page-item'}
+        pageLinkClassName={'page-link'}
+        previousClassName={'page-item'}
+        previousLinkClassName={'page-link'}
+        nextClassName={'page-item'}
+        nextLinkClassName={'page-link'}
+        breakClassName={'page-item'}
+        breakLinkClassName={'page-link'}
+        activeClassName={'active'}
+      />
     </div>
   );
 };

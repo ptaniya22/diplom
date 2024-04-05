@@ -24,11 +24,11 @@ const ProductItem = () => {
 
   return (
     <div className="container">
-      <div className="main__cars">
-        <Link to="/">Назад</Link>
-        <div className="main__item">
-          {product ? <Product product={product} /> : <Loader />}
-        </div>
+      <Link to="/">Назад</Link>
+      <div className="product_item">
+        {/* <div className="main_item"> */}
+        {product ? <Product product={product} /> : <Loader />}
+        {/* </div> */}
       </div>
     </div>
   );

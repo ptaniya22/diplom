@@ -7,7 +7,7 @@ const initialState = {
 
 export const getProduct = createAsyncThunk(
   'productSlice/getProduct',
-  async page => {
+  async (page, { getState }) => {
     let res = await fetch(
       `https://dummyjson.com/products?skip=${page + 9}&limit=12`
     );
@@ -18,8 +18,31 @@ export const getProduct = createAsyncThunk(
 );
 
 export const productSlice = createSlice({
-  name: 'productSlice',
+  name: 'product',
   initialState,
+
+  reducers: {
+    sortProducts: (state, action) => {
+      state.product.sort((a, b) => {
+        if (action.payload === 'price') {
+          if (a[action.payload] > b[action.payload]) {
+            return -1;
+          } else {
+            return 1;
+          }
+        } else {
+          if (
+            a[action.payload].toString().toLowerCase() >
+            b[action.payload].toString().toLowerCase()
+          ) {
+            return action.payload === 'title' ? 1 : -1;
+          } else {
+            return action.payload === 'title' ? -1 : 1;
+          }
+        }
+      });
+    },
+  },
 
   extraReducers: builder => {
     builder.addCase(getProduct.pending, (state, action) => {});
@@ -36,3 +59,5 @@ export const productSlice = createSlice({
 export default productSlice.reducer;
 
 export const usersSelector = state => state.product;
+
+export const { sortProducts } = productSlice.actions;

@@ -76,6 +76,15 @@ ul {
   color: rgb(128, 252, 252);
 }
 
+.logo img {
+  height: 50px;
+  fill: rgb(128, 252, 252);
+}
+
+.logo:hover svg {
+  fill: rgb(3, 209, 209);
+}
+
 .logo:hover {
   color: rgb(3, 209, 209);
 }

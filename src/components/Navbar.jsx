@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { usersSelector, sortProducts } from '../redux/product/productSlice';
+import grad from '../assets/images/graduation-cap.svg';
 
 const Navbar = () => {
   const { isErrorRep, product } = useSelector(usersSelector);
@@ -16,6 +17,7 @@ const Navbar = () => {
       <div className="container">
         <div className="nav__box">
           <Link to="/" className="logo">
+            <img src={grad} alt="" />
             <b>Дипломная работа</b>
           </Link>
           <ul className="repos__search-list">
